@@ -2,6 +2,13 @@
 #include <windows.h>
 using namespace std;
 
+//Proyecto RISK para Estructuras de Datos 2023-3
+//Autores
+//Giseth Villalobos
+//Carlos D'Silvestri
+//Diego Albarracin
+//Vesion: Entregable 0
+
 void imprimirLogoInicio();
 void ayuda();
 bool inicializar();
