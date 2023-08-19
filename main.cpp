@@ -20,6 +20,12 @@ bool reclutar();
 bool pasar_turno();
 bool guardar();
 
+
+//Variables Globales para almacenar los 3 resultados de lanzar los 
+//dados del atacante y el resultado de la suma de los dados del defensor
+vector<int> resultsDadoAtacante;
+int resultDadosDefensor;
+
 int main() {
     //int userInput: Variable para almacenar la entrada del usuario en el
     //menú de inicio del juego.
@@ -30,17 +36,17 @@ int main() {
     //int optionVerifier: Variable usada para almacenar la opcion seleccionada por el usuario en el menu al que 
     //se ingresa si el usuario decide inicializar el juego.
     int optionVerifier = 0;
-    imprimirLogoInicio();
-    
-    cout << "RISK el juego para dominar el mundo :)" << endl;
-    cout << endl;
-    cout << "* Si deseas saber los comandos escribe 1 para recibir ayuda *" << endl;
-    cout << endl;
-    cout<< "* Selecciona 2 para inciar a jugar"<<endl;
-    cout << "* Si deseas salir del juego escibe 0 para salir *";
-    cout << endl;
+
 
     do {
+        imprimirLogoInicio();
+        cout << "RISK el juego para dominar el mundo :)" << endl;
+        cout << endl;
+        cout << "* Si deseas saber los comandos escribe 1 para recibir ayuda *" << endl;
+        cout << endl;
+        cout<< "* Selecciona 2 para inciar a jugar"<<endl;
+        cout << "* Si deseas salir del juego escibe 0 para salir *";
+        cout << endl;
         cout << "$ ";
         cin >> userInput;
 
@@ -167,15 +173,13 @@ int main() {
                     cout << "Ingrese una opcion correcta" << endl;
                     cout << endl;
                   }
-
+          
                 break;
             }
         }
     //Condicion para que el menu se repita mientras el usuario no haya presionado
     //la opcion salir.
     }while (userInput != 0);
-
-    cout << "Hasta luego!" << endl;
     system("Color 07");
     return 0;
 }
@@ -213,7 +217,7 @@ void ayuda() {
       cout << endl;
       cout << " _-_ salir _-_" << endl;
       cout << endl;
-      cout << "si desea saber el funcionamiento de un comando en especifico solo "
+      cout << "Si desea saber el funcionamiento de un comando en especifico solo "
               "escribe el comando para poder decirte como funciona, de lo "
               "contrario escribe salir: "
           << endl;
@@ -338,7 +342,7 @@ bool guardar() {
 
 void imprimirLogoInicio(){
     //system("Color 04") es para cambiar de color el texto de blanco a rojo.
-    system("Color 04");
+    system("Color 03");
     //Indentacion para la impresión del logo del juego "RISK".
     cout<<setfill(' ')<<left<<setw(4)<<" "<<setw(20)<<" "<<setw(20)<<"         "<<setw(20)<<"         "<<setw(20)<<"       "<<endl;
                 
@@ -359,4 +363,142 @@ void imprimirLogoInicio(){
 
     cout<<setfill('-')<<setw(80)<<'-'<<endl;
     cout<<setfill('-')<<setw(80)<<'-'<<endl;
+}
+
+
+void condicionesVictoria(vector<int> resultsDadoAtacante, int resultDadoDefensor){
+// Funcion para determinar las condiciones de victoria.
+// Se recibe como parametro un vector<int> resultsDadoAtacante con los tres resultados del atacante y
+// una variable int resultDadoDefensor.
+// Con la variables anteriores se podrá determinar el ganador y el perdedor.
+    cout<<"Los resultados de 3 dados lanzados por el atacante: " <<endl;
+    int dado1,dado2;
+    for(int i: resultsDadoAtacante){
+        cout<<"Dado "<<i<<": "<< resultsDadoAtacante[i]; //Imprmiendo los resultados de los dados lanzados por el atacante.
+    }
+    cout << "Elija 2 dados para la comparacion: " << endl; //Solicitando que elija solo 2 de los 3 resultados.
+    cout << "Dado 1: ";
+    cin>> dado1;
+    cout << "Dado 2: ";
+    cin>> dado2;
+
+    //WHILE loop para evitar que el programa continue si el usuario no elije un valor correcto.
+    //Se hace uso de la funcion .find() para determinar si el valor ingresado existe o no dentro de los vectores.
+    while( find(resultsDadoAtacante.begin(),resultsDadoAtacante.end(),dado1) == resultsDadoAtacante.end() 
+                    || find(resultsDadoAtacante.begin(),resultsDadoAtacante.end(),dado2) == resultsDadoAtacante.end()) {
+        cout<<"El valor de los dados ingresados no existe"<<endl;
+        cout<<"Ingrese nuevamente los valores: ";
+        cout << "Dado 1: ";
+        cin>> dado1;
+        cout << "Dado 2: ";
+        cin>> dado2;
+    }
+
+    //Condicionales para determinar el ganador y que hacer. Al implementador de estas funciones 
+    //se le recomienda editarlas si es necesario de acuerdo a su logica o lo que tenga planeado.
+    if((dado1+dado2) > resultDadoDefensor){
+      cout<<"ATACANTE: "<< (dado1+dado2) << endl;
+      cout<<"DEFENSOR: "<< (resultDadoDefensor) << endl; 
+      cout<<"El defensor ha perdido una unidad de ejercito en su territorio el cual esta siendo atacado" << endl;      
+    }else if((dado1+dado2) < resultDadoDefensor){
+      cout<<"ATACANTE: "<< (dado1+dado2) << endl;
+      cout<<"DEFENSOR: "<< (resultDadoDefensor) << endl;
+      cout<<"El atacante ha perdido una unidad de ejercito en su territorio desde donde esta atacando" << endl;
+    }else{
+      cout<<"ATACANTE: "<< (dado1+dado2) << endl;
+      cout<<"DEFENSOR: "<< (resultDadoDefensor) << endl;
+      cout<<"Hay un empate!"<<endl;
+      cout<<"El defensor ha ganado y el atacante pierde una unidad de ejercito desde el territorio donde ataca"<<endl;
+    }
+
+}
+
+int imprimirDados(int caso){
+  //Funcion para imprimir los dados cada vez que son lanzados.
+  //recibe como parametro un entero con el caso del dado y retorna
+  //el valor correspondiente al dado.
+    int suma=0;
+    switch (caso)
+    {
+        case 1:
+            cout<<setfill(' ')<<setw(6)<<" "<<" ______________"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|      (*)     |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|______________|"<<endl;
+            suma= 1;
+          break;
+        case 2:
+            cout<<setfill(' ')<<setw(6)<<" "<<" ______________"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)         |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|          (*) |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|______________|"<<endl;
+            suma= 2;
+          break;
+        case 3:
+            cout<<setfill(' ')<<setw(6)<<" "<<" ______________"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)         |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|      (*)     |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|          (*) |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|______________|"<<endl;
+            suma=3;
+          break;
+        case 4:
+            cout<<setfill(' ')<<setw(6)<<" "<<" ______________"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)     (*) |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)     (*) |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|______________|"<<endl;
+            suma=4;
+          break;
+        case 5:
+            cout<<setfill(' ')<<setw(6)<<" "<<" ______________"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)     (*) |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|      (*)     |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)     (*) |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|______________|"<<endl;
+            suma=5;
+          break;
+        case 6:
+            cout<<setfill(' ')<<setw(6)<<" "<<" ______________"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|              |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)    (*)  |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)    (*)  |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|  (*)    (*)  |"<<endl;
+            cout<<setfill(' ')<<setw(6)<<" "<<"|______________|"<<endl;
+            suma=6;
+          break;
+    }
+    return suma;
+}
+
+
+
+void lanzarDados(string turno){
+  //Funcion lanzar dados. Recibe un string para identificar quien va a lanzar
+  // los dados, si el ATANCANTE o DEFENSOR. Si es atacante, lanza los dados 3 veces y los 
+  // almacena cada resultado de manera individual en un vector creado con este fin. Si es defensor, 
+  // lanza los dados 2 veces y almacena el resultado dentro de la variable creada con este fin.
+    int dado= 0;
+    if(turno=="atacante"){
+        int i=3;
+        while(i>0){
+            dado = rand()% 6;
+            resultsDadoAtacante.push_back(imprimirDados(dado));
+            i--;
+        }
+    }else if(turno=="defensor"){
+        int i=2;
+        while(i>0){
+            dado = rand()% 6;
+            resultDadosDefensor+= imprimirDados(dado);
+            i--;
+        }
+    }
 }
