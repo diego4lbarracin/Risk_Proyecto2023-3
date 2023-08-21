@@ -19,7 +19,9 @@ bool atacar();
 bool reclutar();
 bool pasar_turno();
 bool guardar();
-
+void lanzarDados(string turno);
+int imprimirDados(int caso);
+void condicionesVictoria(vector<int> resultsDadoAtacante, int resultDadoDefensor);
 
 //Variables Globales para almacenar los 3 resultados de lanzar los 
 //dados del atacante y el resultado de la suma de los dados del defensor
@@ -63,6 +65,7 @@ int main() {
                   //Inicializacion del juego, al cambiar el valor de 'false' a 'true'
                   //el programa entra el menu principal.
                     inicializer = inicializar();
+                    cout << inicializer;
                     break;
                 case 0:
                     break;
@@ -374,7 +377,7 @@ void condicionesVictoria(vector<int> resultsDadoAtacante, int resultDadoDefensor
     cout<<"Los resultados de 3 dados lanzados por el atacante: " <<endl;
     int dado1,dado2;
     for(int i: resultsDadoAtacante){
-        cout<<"Dado "<<i<<": "<< resultsDadoAtacante[i]; //Imprmiendo los resultados de los dados lanzados por el atacante.
+        cout<<"Dado: "<< i<< endl; //Imprmiendo los resultados de los dados lanzados por el atacante.
     }
     cout << "Elija 2 dados para la comparacion: " << endl; //Solicitando que elija solo 2 de los 3 resultados.
     cout << "Dado 1: ";
@@ -387,7 +390,7 @@ void condicionesVictoria(vector<int> resultsDadoAtacante, int resultDadoDefensor
     while( find(resultsDadoAtacante.begin(),resultsDadoAtacante.end(),dado1) == resultsDadoAtacante.end() 
                     || find(resultsDadoAtacante.begin(),resultsDadoAtacante.end(),dado2) == resultsDadoAtacante.end()) {
         cout<<"El valor de los dados ingresados no existe"<<endl;
-        cout<<"Ingrese nuevamente los valores: ";
+        cout<<"Ingrese nuevamente los valores: "<<endl;
         cout << "Dado 1: ";
         cin>> dado1;
         cout << "Dado 2: ";
