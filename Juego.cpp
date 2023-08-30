@@ -14,7 +14,7 @@ Continentes mundo;
 
     if(!myFile.is_open())
     {
-        cout << "no se pudo abrir" << endl;
+        // cout << "no se pudo abrir" << endl;
     }
   
     list<string> myList;
