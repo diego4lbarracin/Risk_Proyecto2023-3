@@ -28,12 +28,15 @@ bool Jugador::tomarCarta(Carta *carta) {
 }
 
 bool Jugador::obtenerNuevasUnidades() {
-  // Implementa esta función según tu lógica
+  
+  int cantTerritorios = territorios.size();
+  int unidadesAdicionales = cantTerritorios / 3;
+  agregarEjercitos(unidadesAdicionales);
+     return true;
 }
 
 bool Jugador::atacarTerritorioVecino() {
   return true;
-  // Implementa esta función según tu lógica
 }
 
 void Jugador::agregarPuntuacion(int puntuacion) {
