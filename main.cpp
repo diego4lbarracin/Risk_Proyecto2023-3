@@ -390,6 +390,7 @@ bool inicializar(bool inicializer) {
   int ejercitosJugador = 10;
 
   int cantidad;
+  int ejercitosPorJugador;
   if (!inicializer) {
     cout << "cuantos jugadores van a jugar? " << endl;
     cin >> cantidad;
@@ -398,8 +399,13 @@ bool inicializar(bool inicializer) {
            << endl;
       return false;
     } else{
-      juego.calcularInfanteria(&jugadores);
+      ejercitosPorJugador = juego.calcularInfanteria(cantidad);
+        // Asignar ejércitos a los jugadores
+      for (auto jugador : jugadores) {
+        jugador.agregarEjercitos(ejercitosPorJugador);
+  }
     }
+
 
     for (int i = 0; i < cantidad; i++) {
       cout << "digite el nombre del jugador: ";

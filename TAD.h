@@ -81,7 +81,7 @@ public:
 
   void llenarBarajaCartas();
 
-  void calcularInfanteria(vector<Jugador> *jugadores) const;
+  int calcularInfanteria(int cantidad);
 
   bool validarEnCurso();
 

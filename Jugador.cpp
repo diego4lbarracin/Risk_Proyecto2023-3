@@ -32,7 +32,7 @@ bool Jugador::obtenerNuevasUnidades() {
   int cantTerritorios = territorios.size();
   int unidadesAdicionales = cantTerritorios / 3;
   agregarEjercitos(unidadesAdicionales);
-
+     return true;
 }
 
 bool Jugador::atacarTerritorioVecino() {

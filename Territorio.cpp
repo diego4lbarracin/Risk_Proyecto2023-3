@@ -14,3 +14,8 @@ void Territorio::mostrarVecinos() const {
 }
 
 string Territorio::getNombre() { return this->nombre; }
+
+void Territorio::agregarEjercitos(int cantidad)
+{
+  this->ejercitos += cantidad;
+}

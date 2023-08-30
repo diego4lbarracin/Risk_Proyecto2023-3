@@ -102,9 +102,9 @@ void llenarBarajaCartas() {
     }
 }
 
-void calcularInfanteria(vector<Jugador> *jugadores) {
+int calcularInfanteria(int cantidad){
   int totalEjercitos = 0;
-  switch (jugadores->size()) {
+  switch (cantidad) {
   case 3:
     totalEjercitos = 35;
     break;
@@ -118,11 +118,7 @@ void calcularInfanteria(vector<Jugador> *jugadores) {
     totalEjercitos = 20;
     break;
   }
-
-  // Asignar ejércitos a los jugadores
-  for (auto &jugador : *jugadores) {
-    jugador.agregarEjercitos(totalEjercitos / jugadores->size());
-  }
+  return totalEjercitos;
 }
 
 bool validarEnCurso(vector<Jugador> jugadores) {
@@ -136,7 +132,7 @@ bool validarEnCurso(vector<Jugador> jugadores) {
       return true;
     }
   }
-
+  return false;
 }
 
 void establecerTurnos(vector<Jugador> jugadores) {
